@@ -1,0 +1,180 @@
+{% extends 'index.html' %}
+
+
+{% block navbar %}
+    <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+            <a class="nav-link" href="{{url_for('alumni_home')}}" style="color: white;">Home</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{url_for('alumni_gallery')}}" style="color: white; padding-left: 30px;">Gallery</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{url_for('alumni_news')}}" style="color: white; padding-left: 30px;">News</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{url_for('alumni_achiever')}}" style="color: white; padding-left: 30px;">Achievers</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{url_for('events_list')}}" style="color: white; padding-left: 30px;">Events</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{url_for('alumni_list')}}" style="color: white; padding-left: 30px;">Chatbox</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{url_for('alumni_chatbot')}}" style="color: yellow; padding-left: 30px;">Chatbot</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{url_for('profile')}}" style="color: white; padding-left: 30px;">Profile</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{url_for('index')}}" style="color: white; padding-left: 30px;">Logout</a>
+        </li>
+    </ul>
+{% endblock %}
+
+
+{% block content %}
+
+<style>
+    .chat-container {
+        max-width: 600px;
+        margin: 50px auto;
+        background-color: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+    }
+
+    .chat-header {
+        background-color: #085497;
+        color: #ffffff;
+        padding: 15px;
+        text-align: center;
+        font-size: 1.5rem;
+        font-weight: bold;
+    }
+
+    .chat-box {
+        padding: 20px;
+        height: 400px;
+        overflow-y: auto;
+        background-color: #f0f0f0;
+    }
+
+    .chat-box p {
+        padding: 10px;
+        border-radius: 10px;
+        max-width: 75%;
+    }
+
+    .user {
+        background-color: #d1f0d1;
+        color: #2f930b;
+        align-self: flex-end;
+        text-align: right;
+        margin-left: auto;
+    }
+
+    .bot {
+        background-color: #d9eaff;
+        color: #085497;
+        align-self: flex-start;
+        text-align: left;
+        margin-right: auto;
+    }
+
+    .input-container {
+        display: flex;
+        border-top: 1px solid #ddd;
+        background-color: #ffffff;
+        padding: 10px;
+    }
+
+    #user_input {
+        flex: 1;
+        padding: 10px;
+        font-size: 1rem;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        outline: none;
+        transition: border-color 0.2s;
+    }
+
+    #user_input:focus {
+        border-color: #085497;
+    }
+
+    #send_button {
+        padding: 10px 20px;
+        font-size: 1rem;
+        background-color: #085497;
+        color: #ffffff;
+        border: none;
+        border-radius: 5px;
+        margin-left: 10px;
+        cursor: pointer;
+        transition: background-color 0.2s;
+    }
+
+    #send_button:hover {
+        background-color: #063a6a;
+    }
+</style>
+
+<div style="display: flex; align-items: center; justify-content: center; background-color: rgba(0, 0, 0, 0.655); min-height: 700px;">
+    <div class="container">
+        <div class="chat-container">
+            <div class="chat-header">College Enquiry Chatbot</div>
+            <div class="chat-box" id="chat_box"></div>
+            <div class="input-container">
+                <input type="text" id="user_input" placeholder="Type your message here...">
+                <button id="send_button">Send</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    const chatBox = document.getElementById('chat_box');
+    const userInput = document.getElementById('user_input');
+    const sendButton = document.getElementById('send_button');
+
+    function appendMessage(sender, message) {
+        const msg = document.createElement('p');
+        msg.className = sender;
+        msg.innerText = `${sender === 'user' ? 'You' : 'Bot'}: ${message}`;
+        chatBox.appendChild(msg);
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    sendButton.addEventListener('click', () => {
+        const message = userInput.value.trim();
+        if (message) {
+            appendMessage('user', message);
+            fetch('/chat', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: `user_input=${message}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                appendMessage('bot', data.bot_response);
+                if (data.end_chat) {
+                    userInput.disabled = true;
+                    sendButton.disabled = true;
+                }
+            });
+            userInput.value = '';
+        }
+    });
+
+    userInput.addEventListener("keypress", function(event) {
+        if (event.key === "Enter") {
+            sendButton.click();
+        }
+    });
+</script>
+
+{% endblock %}

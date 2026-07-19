@@ -1,0 +1,112 @@
+{% extends 'index.html' %}
+
+{% block navbar %}
+<ul class="navbar-nav ml-auto">
+    <li class="nav-item active">
+        <a class="nav-link" href="{{url_for('admin_home')}}" style="color: white;">Home</a>
+    </li>
+
+    <li class="nav-item dropdown active">
+        <a class="nav-link dropdown-toggle" href="#" id="requestsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: yellow; padding-left: 20px;">
+            List
+        </a>
+        <div class="dropdown-menu" aria-labelledby="requestsDropdown">
+            <a class="dropdown-item" href="{{url_for('admin_alumni_list')}}">alumni list</a>
+            <a class="dropdown-item" href="{{url_for('admin_event_list')}}">Events list</a>
+        </div>
+    </li>
+
+    <li class="nav-item dropdown active">
+        <a class="nav-link dropdown-toggle" href="#" id="requestsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: white; padding-left: 20px;">
+            Requests
+        </a>
+        <div class="dropdown-menu" aria-labelledby="requestsDropdown">
+            <a class="dropdown-item" href="{{url_for('alumni_requests')}}">alumni Requests</a>
+            <a class="dropdown-item" href="{{url_for('events_requests')}}">Events requests</a>
+        </div>
+    </li>
+
+    <li class="nav-item dropdown active">
+        <a class="nav-link dropdown-toggle" href="#" id="eventDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: white; padding-left: 20px;">
+            Event
+        </a>
+        <div class="dropdown-menu" aria-labelledby="eventDropdown">
+            <a class="dropdown-item" href="{{url_for('add_event')}}">Add Event</a>
+            <a class="dropdown-item" href="{{url_for('manage_event')}}">Manage Event</a>
+        </div>
+    </li>
+
+
+    <li class="nav-item dropdown active">
+        <a class="nav-link dropdown-toggle" href="#" id="galleryDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: white; padding-left: 20px;">
+            Gallery
+        </a>
+        <div class="dropdown-menu" aria-labelledby="galleryDropdown">
+            <a class="dropdown-item" href="{{url_for('add_gallery')}}">Add Gallery</a>
+            <a class="dropdown-item" href="{{url_for('manage_gallery')}}">Manage Gallery</a>
+        </div>
+    </li>
+
+    <li class="nav-item dropdown active">
+        <a class="nav-link dropdown-toggle" href="#" id="newsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: white; padding-left: 20px;">
+            News
+        </a>
+        <div class="dropdown-menu" aria-labelledby="newsDropdown">
+            <a class="dropdown-item" href="{{url_for('add_news')}}">Add News</a>
+            <a class="dropdown-item" href="{{url_for('manage_news')}}">Manage News</a>
+        </div>
+    </li>
+
+    <li class="nav-item dropdown active">
+        <a class="nav-link dropdown-toggle" href="#" id="achieverDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: white; padding-left: 20px;">
+            Achiever
+        </a>
+        <div class="dropdown-menu" aria-labelledby="achieverDropdown">
+            <a class="dropdown-item" href="{{url_for('add_achiever')}}">Add Achiever</a>
+            <a class="dropdown-item" href="{{url_for('manage_achiever')}}">Manage Achiever</a>
+        </div>
+    </li>
+    
+    <li class="nav-item">
+        <a class="nav-link" href="{{url_for('index')}}" style="color: white; padding-left: 20px;">Logout</a>
+    </li>
+</ul>
+
+{% endblock %}
+
+{% block content %}
+    <div class="banner_section layout_padding" style="display: flex; align-items: center; justify-content: center; height: 100vh; background-color: rgba(0, 0, 0, 0.655);">
+        <div class="container">
+            {% if events_data %}
+                <div style="max-height: 500px; overflow-y: auto; margin-top: -100px;">
+                    <table class="table table-bordered table-hover" style="background-color: rgba(255, 255, 255, 0.856);">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>ID</th>
+                                <th>Event Name</th>
+                                <th>Description</th>
+                                <th>Date</th>
+                                <th>Time</th>
+                                <th>Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for data in events_data %}
+                            <tr>
+                                <td>{{ data[0] }}</td>
+                                <td>{{ data[1] }}</td>
+                                <td>{{ data[2] }}</td>
+                                <td>{{ data[3] }}</td>
+                                <td>{{ data[4] }}</td>
+                                <td>{{ data[5] }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <p class="text-center text-light">No pending alumni requests at the moment!</p>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

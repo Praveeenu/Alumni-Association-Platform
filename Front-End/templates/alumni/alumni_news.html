@@ -1,0 +1,77 @@
+{% extends 'index.html' %}
+
+
+{% block navbar %}
+    <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+            <a class="nav-link" href="{{url_for('alumni_home')}}" style="color: white;">Home</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{url_for('alumni_gallery')}}" style="color: white; padding-left: 30px;">Gallery</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{url_for('alumni_news')}}" style="color: yellow; padding-left: 30px;">News</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{url_for('alumni_achiever')}}" style="color: white; padding-left: 30px;">Achievers</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{url_for('events_list')}}" style="color: white; padding-left: 30px;">Events</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{url_for('alumni_list')}}" style="color: white; padding-left: 30px;">Chatbox</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{url_for('alumni_chatbot')}}" style="color: white; padding-left: 30px;">Chatbot</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{url_for('profile')}}" style="color: white; padding-left: 30px;">Profile</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{url_for('index')}}" style="color: white; padding-left: 30px;">Logout</a>
+        </li>
+    </ul>
+{% endblock %}
+
+
+{% block content %}
+    <div style="display: flex; align-items: center; justify-content: center; background-color: rgba(0, 0, 0, 0.655); min-height: 700px;">
+        <div class="container">
+            {% if news_data %}
+            <div class="row">
+                {% for news in news_data %}
+                    <div class="col-lg-12 mb-4">
+                        <div class="p-4 bg-white rounded shadow">
+                            <div class="row">
+                                <div class="col-4 text-center">
+                                    <img src="data:image/jpeg;base64,{{ news.img }}" alt="News Image" class="img-fluid rounded">
+                                </div>
+                                
+                                <div class="col-8 d-flex flex-column justify-content-between" style="height: 100%;">
+                                    <div class="mb-3">
+                                        <h3 class="mb-4">{{ news.title or "News " ~ loop.index }}</h3>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <textarea class="form-control" rows="3" cols="10" disabled>{{ news.description }}</textarea>
+                                    </div>
+                                    <div class="mb-3">
+                                        <a href="{{ news.link }}" target="_blank" class="btn btn-link">
+                                            Click here to View News 
+                                            <span style="color: rgba(79, 69, 69, 0.889); font-size: 12px; margin-left: 10px;">{{ news.date }}</span>
+                                        </a>
+                                    </div>                                 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="text-center text-light">No news at the moment!</p>
+        {% endif %}
+        </div>
+    </div>
+
+{% endblock %}
+

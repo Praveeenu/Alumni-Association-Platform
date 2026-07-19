@@ -1,0 +1,51 @@
+{% extends 'index.html' %}
+
+
+{% block navbar %}
+    <ul class="navbar-nav ml-auto">
+        <li class="nav-item active">
+            <a class="nav-link" href="{{url_for('index')}}" style="color: white;">Home</a>
+        </li>
+        <li class="nav-item active">
+            <a class="nav-link" href="{{url_for('about')}}" style="color: yellow; padding-left: 40px;">About</a>
+         </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{url_for('login')}}" style="color: white; padding-left: 40px;">LogIn</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{url_for('events')}}" style="color: white; padding-left: 40px;">Events</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{url_for('gallery')}}" style="color: white; padding-left: 40px;">Gallery</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{url_for('news')}}" style="color: white; padding-left: 40px;">News</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{url_for('achiever')}}" style="color: white; padding-left: 40px;">Achievers</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{url_for('chatbot')}}" style="color: white; padding-left: 40px;">Chatbot</a>
+        </li>
+    </ul>
+{% endblock %}
+
+
+{% block content %}
+    <div style="display: flex; align-items: center; justify-content: center; background-color: rgba(0, 0, 0, 0.655); min-height: 700px;">
+        <div class="p-4 bg-white rounded shadow">
+            <div class="row">
+                <div class="col">
+                    <img src="/static/images/bg1.jpeg">
+                </div>
+                <div class="col">
+                    <p style="text-align: justify;">
+                        The Alumni Network: An Academic Portal using Machine Learning is an innovative web platform designed to enhance engagement between alumni and their academic institution. The system enables alumni to register, interact with fellow alumni, participate in academy events, and stay updated with academy news. Administrators can manage alumni data, approve registration and event requests, and update academy content, such as events, news, and galleries. The platform also integrates an advanced chatbot powered by Long Short-Term Memory (LSTM) networks to efficiently handle user inquiries. This portal serves multiple user roles: Admin, Alumni, and Guests. Alumni can register, chat with others via the chatbox, and book events, while prospective users can explore the gallery, news, and interact with the chatbot for information about the academy. Admins handle backend processes, such as managing alumni registrations and event requests. The system’s user-friendly design, coupled with automated features like the chatbot and email notification system, creates an efficient and streamlined experience for both administrators and alumni. Additionally, the system ensures security through robust authentication and validation mechanisms, safeguarding user data and interactions. This project provides a seamless digital platform for strengthening alumni relationships, enhancing event management, and fostering ongoing engagement between alumni and their alma mater
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+

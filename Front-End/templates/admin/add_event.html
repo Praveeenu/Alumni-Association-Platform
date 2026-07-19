@@ -1,0 +1,138 @@
+{% extends 'index.html' %}
+
+{% block navbar %}
+<ul class="navbar-nav ml-auto">
+    <li class="nav-item active">
+        <a class="nav-link" href="{{url_for('admin_home')}}" style="color: white;">Home</a>
+    </li>
+
+    <li class="nav-item dropdown active">
+        <a class="nav-link dropdown-toggle" href="#" id="requestsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: white; padding-left: 20px;">
+            List
+        </a>
+        <div class="dropdown-menu" aria-labelledby="requestsDropdown">
+            <a class="dropdown-item" href="{{url_for('admin_alumni_list')}}">alumni list</a>
+            <a class="dropdown-item" href="{{url_for('admin_event_list')}}">Events list</a>
+        </div>
+    </li>
+
+    <li class="nav-item dropdown active">
+        <a class="nav-link dropdown-toggle" href="#" id="requestsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: white; padding-left: 20px;">
+            Requests
+        </a>
+        <div class="dropdown-menu" aria-labelledby="requestsDropdown">
+            <a class="dropdown-item" href="{{url_for('alumni_requests')}}">alumni Requests</a>
+            <a class="dropdown-item" href="{{url_for('events_requests')}}">Events requests</a>
+        </div>
+    </li>
+
+    <li class="nav-item dropdown active">
+        <a class="nav-link dropdown-toggle" href="#" id="eventDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: yellow; padding-left: 20px;">
+            Event
+        </a>
+        <div class="dropdown-menu" aria-labelledby="eventDropdown">
+            <a class="dropdown-item" href="{{url_for('add_event')}}">Add Event</a>
+            <a class="dropdown-item" href="{{url_for('manage_event')}}">Manage Event</a>
+        </div>
+    </li>
+
+
+    <li class="nav-item dropdown active">
+        <a class="nav-link dropdown-toggle" href="#" id="galleryDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: white; padding-left: 20px;">
+            Gallery
+        </a>
+        <div class="dropdown-menu" aria-labelledby="galleryDropdown">
+            <a class="dropdown-item" href="{{url_for('add_gallery')}}">Add Gallery</a>
+            <a class="dropdown-item" href="{{url_for('manage_gallery')}}">Manage Gallery</a>
+        </div>
+    </li>
+
+    <li class="nav-item dropdown active">
+        <a class="nav-link dropdown-toggle" href="#" id="newsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: white; padding-left: 20px;">
+            News
+        </a>
+        <div class="dropdown-menu" aria-labelledby="newsDropdown">
+            <a class="dropdown-item" href="{{url_for('add_news')}}">Add News</a>
+            <a class="dropdown-item" href="{{url_for('manage_news')}}">Manage News</a>
+        </div>
+    </li>
+
+    <li class="nav-item dropdown active">
+        <a class="nav-link dropdown-toggle" href="#" id="achieverDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: white; padding-left: 20px;">
+            Achiever
+        </a>
+        <div class="dropdown-menu" aria-labelledby="achieverDropdown">
+            <a class="dropdown-item" href="{{url_for('add_achiever')}}">Add Achiever</a>
+            <a class="dropdown-item" href="{{url_for('manage_achiever')}}">Manage Achiever</a>
+        </div>
+    </li>
+    
+    <li class="nav-item">
+        <a class="nav-link" href="{{url_for('index')}}" style="color: white; padding-left: 20px;">Logout</a>
+    </li>
+</ul>
+
+{% endblock %}
+
+{% block content %}
+    <div style="margin-top: 50px; min-height: 650px; height: auto; background-color: rgba(0, 0, 0, 0.655);">
+        <div class="container-fluid" style="margin-top: -50px;">
+            <div class="contact_section_2">
+                <div class="row">
+                    <div class="col-md-12">
+
+                        <center>
+                            <form action="{{url_for('add_event')}}" method="post" onsubmit="return validateForm()" style="background-color: rgba(255, 255, 255, 0.575); width: 600px; border-radius: 10px; margin-top: -30px;">
+                                <h1 class="contact_taital" style="color: rgba(0, 0, 0, 0.849);"><br>Add Event</h1>
+
+                                <div class="col-11">
+                                    <input type="text" name="event_name" class="mail_text" placeholder="Event Name" required
+                                    minlength="3" maxlength="30" pattern="[A-Za-z\s]+" title="Event Name should be 3-30 characters long and only contain letters and spaces">
+                                    
+                                    <textarea type="text" name="description" class="mail_text" placeholder="Description" required
+                                    minlength="10" maxlength="300" pattern="[A-Za-z\s]+" title="Description should be 10-300 characters long and only contain letters and spaces"></textarea>
+                                
+                                    <input type="date" id="eventDate" name="event_date" class="mail_text" required title="Please select a valid date">
+
+                                    <input type="time" name="event_time" class="mail_text" required title="Please select a valid time">
+
+                                    <input type="number" name="event_amount" class="mail_text" placeholder="Amount" required>
+                                </div>
+                                
+
+                                <button type="submit" class="btn btn-info" style="margin-top: 20px; width: 30%;">Submit</button><br><br>
+                            </form>
+                        </center>
+                        
+                        <script>
+                            function validateForm() {
+                                var name = document.getElementsByName('eventName')[0].value;
+                            
+                                if (name.length < 3) {
+                                    alert("Event name must be at least 3 characters long.");
+                                    return false;
+                                }
+
+                                var description = document.getElementsByName('description')[0].value;
+                            
+                                if (description.length < 10) {
+                                    alert("Description must be at least 10 characters long.");
+                                    return false;
+                                }
+                            
+                                // You can add other custom validations here as needed
+                            
+                                return true;
+                            }
+
+                            // Set the current date as the minimum date
+                            const today = new Date().toISOString().split('T')[0];
+                            document.getElementById('eventDate').setAttribute('min', today);
+                        </script>
+                                            
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

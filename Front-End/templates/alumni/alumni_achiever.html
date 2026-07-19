@@ -1,0 +1,99 @@
+{% extends 'index.html' %}
+
+
+{% block navbar %}
+    <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+            <a class="nav-link" href="{{url_for('alumni_home')}}" style="color: white;">Home</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{url_for('alumni_gallery')}}" style="color: white; padding-left: 30px;">Gallery</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{url_for('alumni_news')}}" style="color: white; padding-left: 30px;">News</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{url_for('alumni_achiever')}}" style="color: yellow; padding-left: 30px;">Achievers</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{url_for('events_list')}}" style="color: white; padding-left: 30px;">Events</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{url_for('alumni_list')}}" style="color: white; padding-left: 30px;">Chatbox</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{url_for('alumni_chatbot')}}" style="color: white; padding-left: 30px;">Chatbot</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{url_for('profile')}}" style="color: white; padding-left: 30px;">Profile</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{url_for('index')}}" style="color: white; padding-left: 30px;">Logout</a>
+        </li>
+    </ul>
+{% endblock %}
+
+
+{% block content %}
+    <div style="display: flex; align-items: center; justify-content: center; background-color: rgba(0, 0, 0, 0.655); min-height: 700px;">
+        <div class="container">
+            {% if acheiver_data %}
+                <div class="row">
+                    {% for achiever in acheiver_data %}
+                        <div class="col-lg-12 mb-4">
+                            <div class="p-4 bg-white rounded shadow">
+                                <div class="row">
+                                    <div class="col-4 text-center">
+                                        <img src="data:image/jpeg;base64,{{ achiever.img }}" alt="News Image" class="img-fluid rounded">
+                                    </div>
+                                    
+                                    <div class="col-8 d-flex flex-column justify-content-between" style="height: 100%;">
+                                        <div class="row mb-3">
+                                            <div class="col-md-3 text-right">
+                                                <label for="achiever_name">Achiever Name</label>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <input type="text" class="form-control" id="achiever_name" name="name" value="{{achiever.name}}" disabled>
+                                            </div>
+                                        </div>
+    
+                                        <div class="row mb-3">
+                                            <div class="col-md-3 text-right">
+                                                <label for="achiever_time">Batch No</label>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <input type="number" class="form-control" id="achiever_time" name="batch" value="{{achiever.batch}}" disabled>
+                                            </div>
+                                        </div>
+    
+                                        <div class="row mb-3">
+                                            <div class="col-md-3 text-right">
+                                                <label for="achiever_time">Department</label>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <input type="text" class="form-control" id="achiever_time" name="department" value="{{achiever.department}}" disabled>
+                                            </div>
+                                        </div>
+    
+                                        <div class="row mb-3">
+                                            <div class="col-md-3 text-right">
+                                                <label for="description">Description</label>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <textarea class="form-control" id="description" name="description" rows="8" disabled>{{achiever.description}}</textarea>
+                                            </div>
+                                        </div>                                 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p class="text-center text-light">No acheivers at the moment!</p>
+            {% endif %}
+        </div>
+    </div>
+
+{% endblock %}
+

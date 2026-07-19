@@ -1,0 +1,70 @@
+{% extends 'index.html' %}
+
+
+{% block navbar %}
+    <ul class="navbar-nav ml-auto">
+    <li class="nav-item active">
+        <a class="nav-link" href="{{url_for('index')}}" style="color: white;">Home</a>
+    </li>
+    <li class="nav-item active">
+        <a class="nav-link" href="{{url_for('about')}}" style="color: white; padding-left: 40px;">About</a>
+     </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{{url_for('login')}}" style="color: white; padding-left: 40px;">LogIn</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{{url_for('events')}}" style="color: white; padding-left: 40px;">Events</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{{url_for('gallery')}}" style="color: yellow; padding-left: 40px;">Gallery</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{{url_for('news')}}" style="color: white; padding-left: 40px;">News</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{{url_for('achiever')}}" style="color: white; padding-left: 40px;">Achievers</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{{url_for('chatbot')}}" style="color: white; padding-left: 40px;">Chatbot</a>
+    </li>
+    </ul>
+{% endblock %}
+
+
+{% block content %}
+    <div style="display: flex; align-items: center; justify-content: center; background-color: rgba(0, 0, 0, 0.655); min-height: 700px;">
+        <div class="container">
+            {% if gallery_data %}
+                <div class="row">
+                    {% for gallery in gallery_data %}
+                        <div class="col-md-6 mb-4">
+                            <div class="p-4" style="background-color: rgba(255, 255, 255, 0.85); border-radius: 10px; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); text-align: center; width: 100%;">
+                                <h3 class="mb-4">Gallery {{ loop.index }}</h3>
+    
+                                <div class="mb-3">
+                                    <img src="data:image/jpeg;base64,{{ gallery.img }}" style="height: 200px; width: 100%; object-fit: cover; border-radius: 5px;" class="img-fluid"/>
+                                </div>
+    
+                                <div class="mb-3">
+                                    <h5>{{ gallery.img_name }}</h5>
+                                </div>
+    
+                                <div class="mb-3">
+                                    <textarea class="form-control" cols="30" rows="10" disabled>{{ gallery.description }}</textarea>
+                                </div>
+                                
+                            </div>
+                        </div>
+
+                        {% if loop.index is divisibleby 2 %}
+                            <div class="w-100"></div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p class="text-center text-light">Gallery is empty at the moment!</p>
+            {% endif %}
+        </div>
+    </div>
+
+{% endblock %}

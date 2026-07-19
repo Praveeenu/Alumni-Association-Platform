@@ -1,0 +1,160 @@
+{% extends 'index.html' %}
+
+{% block navbar %}
+<ul class="navbar-nav ml-auto">
+    <li class="nav-item active">
+        <a class="nav-link" href="{{url_for('admin_home')}}" style="color: white;">Home</a>
+    </li>
+
+    <li class="nav-item dropdown active">
+        <a class="nav-link dropdown-toggle" href="#" id="requestsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: white; padding-left: 20px;">
+            List
+        </a>
+        <div class="dropdown-menu" aria-labelledby="requestsDropdown">
+            <a class="dropdown-item" href="{{url_for('admin_alumni_list')}}">alumni list</a>
+            <a class="dropdown-item" href="{{url_for('admin_event_list')}}">Events list</a>
+        </div>
+    </li>
+
+    <li class="nav-item dropdown active">
+        <a class="nav-link dropdown-toggle" href="#" id="requestsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: white; padding-left: 20px;">
+            Requests
+        </a>
+        <div class="dropdown-menu" aria-labelledby="requestsDropdown">
+            <a class="dropdown-item" href="{{url_for('alumni_requests')}}">alumni Requests</a>
+            <a class="dropdown-item" href="{{url_for('events_requests')}}">Events requests</a>
+        </div>
+    </li>
+
+    <li class="nav-item dropdown active">
+        <a class="nav-link dropdown-toggle" href="#" id="eventDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: white; padding-left: 20px;">
+            Event
+        </a>
+        <div class="dropdown-menu" aria-labelledby="eventDropdown">
+            <a class="dropdown-item" href="{{url_for('add_event')}}">Add Event</a>
+            <a class="dropdown-item" href="{{url_for('manage_event')}}">Manage Event</a>
+        </div>
+    </li>
+
+
+    <li class="nav-item dropdown active">
+        <a class="nav-link dropdown-toggle" href="#" id="galleryDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: white; padding-left: 20px;">
+            Gallery
+        </a>
+        <div class="dropdown-menu" aria-labelledby="galleryDropdown">
+            <a class="dropdown-item" href="{{url_for('add_gallery')}}">Add Gallery</a>
+            <a class="dropdown-item" href="{{url_for('manage_gallery')}}">Manage Gallery</a>
+        </div>
+    </li>
+
+    <li class="nav-item dropdown active">
+        <a class="nav-link dropdown-toggle" href="#" id="newsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: yellow; padding-left: 20px;">
+            News
+        </a>
+        <div class="dropdown-menu" aria-labelledby="newsDropdown">
+            <a class="dropdown-item" href="{{url_for('add_news')}}">Add News</a>
+            <a class="dropdown-item" href="{{url_for('manage_news')}}">Manage News</a>
+        </div>
+    </li>
+
+    <li class="nav-item dropdown active">
+        <a class="nav-link dropdown-toggle" href="#" id="achieverDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: white; padding-left: 20px;">
+            Achiever
+        </a>
+        <div class="dropdown-menu" aria-labelledby="achieverDropdown">
+            <a class="dropdown-item" href="{{url_for('add_achiever')}}">Add Achiever</a>
+            <a class="dropdown-item" href="{{url_for('manage_achiever')}}">Manage Achiever</a>
+        </div>
+    </li>
+    
+    <li class="nav-item">
+        <a class="nav-link" href="{{url_for('index')}}" style="color: white; padding-left: 20px;">Logout</a>
+    </li>
+</ul>
+
+{% endblock %}
+
+
+{% block content %}
+    <div style="display: flex; align-items: center; justify-content: center; background-color: rgba(0, 0, 0, 0.655); min-height: 700px;">
+        <div class="container">
+            {% if news_data %}
+                <div class="row">
+                    {% for news in news_data %}
+                        <div class="col-md-6 mb-4">
+                            <div class="p-4" style="background-color: rgba(255, 255, 255, 0.85); border-radius: 10px; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);">
+                                <h3 class="mb-4">News {{ loop.index }}</h3>
+                                <form action="{{ url_for('manage_news') }}" method="POST" enctype="multipart/form-data" onsubmit="return validateForm()"> 
+                                    <div class="row mb-3">
+                                        <div class="col-md-3 text-right">
+                                            <label for="news_name">News Title</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" id="news_name" name="name" value="{{news.title}}" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <div class="col-md-3 text-right">
+                                            <label for="img_name">Image</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <img src="data:image/jpeg;base64,{{ news.img }}" style="height: 100px; width: 100px;"/>
+                                            <input type="file" name="img" class="mail_text">
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <div class="col-md-3 text-right">
+                                            <label for="description">Description</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <textarea class="form-control" id="description" name="description" required>{{news.description}}</textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <div class="col-md-3 text-right">
+                                            <label for="news_time">News link</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" id="news_time" name="link" value="{{news.link}}" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <div class="col-md-3 text-right">
+                                            <label for="news_date">Date</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <input type="date" class="form-control" id="news_date" name="date" value="{{news.date}}" required title="Please select a valid date">
+                                        </div>
+                                    </div>
+
+
+                                    <input type="hidden" name="id" value="{{news.id}}">
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <button type="submit" class="btn btn-primary btn-block">Update</button>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <a href="{{ url_for('delete_news', id = news.id) }}" class="btn btn-danger btn-block">Delete</a>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        {% if loop.index is divisibleby 2 %}
+                            <div class="w-100"></div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p class="text-center text-light">Gallery is empty at the moment!</p>
+            {% endif %}
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,97 @@
+{% extends 'index.html' %}
+
+{% block navbar %}
+<ul class="navbar-nav ml-auto">
+    <li class="nav-item active">
+        <a class="nav-link" href="{{url_for('admin_home')}}" style="color: yellow;">Home</a>
+    </li>
+
+    <li class="nav-item dropdown active">
+        <a class="nav-link dropdown-toggle" href="#" id="requestsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: white; padding-left: 20px;">
+            List
+        </a>
+        <div class="dropdown-menu" aria-labelledby="requestsDropdown">
+            <a class="dropdown-item" href="{{url_for('admin_alumni_list')}}">alumni list</a>
+            <a class="dropdown-item" href="{{url_for('admin_event_list')}}">Events list</a>
+        </div>
+    </li>
+
+    <li class="nav-item dropdown active">
+        <a class="nav-link dropdown-toggle" href="#" id="requestsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: white; padding-left: 20px;">
+            Requests
+        </a>
+        <div class="dropdown-menu" aria-labelledby="requestsDropdown">
+            <a class="dropdown-item" href="{{url_for('alumni_requests')}}">alumni Requests</a>
+            <a class="dropdown-item" href="{{url_for('events_requests')}}">Events requests</a>
+        </div>
+    </li>
+
+    <li class="nav-item dropdown active">
+        <a class="nav-link dropdown-toggle" href="#" id="eventDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: white; padding-left: 20px;">
+            Event
+        </a>
+        <div class="dropdown-menu" aria-labelledby="eventDropdown">
+            <a class="dropdown-item" href="{{url_for('add_event')}}">Add Event</a>
+            <a class="dropdown-item" href="{{url_for('manage_event')}}">Manage Event</a>
+        </div>
+    </li>
+
+
+    <li class="nav-item dropdown active">
+        <a class="nav-link dropdown-toggle" href="#" id="galleryDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: white; padding-left: 20px;">
+            Gallery
+        </a>
+        <div class="dropdown-menu" aria-labelledby="galleryDropdown">
+            <a class="dropdown-item" href="{{url_for('add_gallery')}}">Add Gallery</a>
+            <a class="dropdown-item" href="{{url_for('manage_gallery')}}">Manage Gallery</a>
+        </div>
+    </li>
+
+    <li class="nav-item dropdown active">
+        <a class="nav-link dropdown-toggle" href="#" id="newsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: white; padding-left: 20px;">
+            News
+        </a>
+        <div class="dropdown-menu" aria-labelledby="newsDropdown">
+            <a class="dropdown-item" href="{{url_for('add_news')}}">Add News</a>
+            <a class="dropdown-item" href="{{url_for('manage_news')}}">Manage News</a>
+        </div>
+    </li>
+
+    <li class="nav-item dropdown active">
+        <a class="nav-link dropdown-toggle" href="#" id="achieverDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: white; padding-left: 20px;">
+            Achiever
+        </a>
+        <div class="dropdown-menu" aria-labelledby="achieverDropdown">
+            <a class="dropdown-item" href="{{url_for('add_achiever')}}">Add Achiever</a>
+            <a class="dropdown-item" href="{{url_for('manage_achiever')}}">Manage Achiever</a>
+        </div>
+    </li>
+    
+    <li class="nav-item">
+        <a class="nav-link" href="{{url_for('index')}}" style="color: white; padding-left: 20px;">Logout</a>
+    </li>
+</ul>
+
+{% endblock %}
+
+{% block content %}
+    <div class="banner_section layout_padding" style="display: flex; align-items: center; justify-content: center; height: 100vh; background-color: rgba(0, 0, 0, 0.655);">
+        <div class="container">
+            <div id="banner_slider" class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <div class="row justify-content-center">
+                        <div class="banner_taital_main text-center" style="margin-top: -80px;">
+                            
+                            <h1 class="banner_taital" style="color: white; font-size: 30px;">Welcome  Admin!</h1>
+                            <h5 class="tasty_text">Alumni Network: An Academic Portal using Machine Learning</h5>
+                            <p class="banner_text" style="color: white;">"Alumni Network: Connecting Past, Empowering Future with Machine Learning"</p>
+                            
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,12 @@
+python==3.10.8
+Flask==3.0.3
+mysql-connector-python==9.1.0
+numpy==1.26.0
+pandas==2.2.2
+scikit-learn==1.2.2
+tensorflow==2.19.0
+flask_mail
+openpyxl==3.1.5
+transformers==4.49.0
+google-generativeai==0.8.4
+fuzzywuzzy==0.18.0

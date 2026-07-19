@@ -1,0 +1,76 @@
+{% extends 'index.html' %}
+
+
+{% block navbar %}
+    <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+            <a class="nav-link" href="{{url_for('alumni_home')}}" style="color: white;">Home</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{url_for('alumni_gallery')}}" style="color: white; padding-left: 30px;">Gallery</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{url_for('alumni_news')}}" style="color: white; padding-left: 30px;">News</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{url_for('alumni_achiever')}}" style="color: white; padding-left: 30px;">Achievers</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{url_for('events_list')}}" style="color: white; padding-left: 30px;">Events</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{url_for('alumni_list')}}" style="color: yellow; padding-left: 30px;">Chatbox</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{url_for('alumni_chatbot')}}" style="color: white; padding-left: 30px;">Chatbot</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{url_for('profile')}}" style="color: white; padding-left: 30px;">Profile</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{url_for('index')}}" style="color: white; padding-left: 30px;">Logout</a>
+        </li>
+    </ul>
+{% endblock %}
+
+{% block content %}
+    <div class="banner_section layout_padding" style=" align-items: center; justify-content: center; height: 100vh; background-color: rgba(0, 0, 0, 0.655); padding: 100px;">
+        <center>
+            <form action="{{url_for('alumni_list')}}" method="post" enctype="multipart/form-data" onsubmit="return validateForm()" style="background-color: rgba(255, 255, 255, 0.575); border-radius: 10px; margin-top: -30px; width: fit-content; padding: 20px;">
+                <h1 class="contact_taital" style="color: rgba(0, 0, 0, 0.849);">Search box</h1>
+
+                <input type="text" name="name" class="mail_text" placeholder="Search by alumni name" required>
+
+                <button type="submit" class="btn btn-info" style="margin-top: 20px; width: 30%;">Submit</button><br><br>
+            </form><br><br>
+        </center>
+
+        {% if alumni_data %}
+            <div style="max-height: 500px; overflow-y: auto;">
+                <table class="table table-bordered table-hover" style="background-color: rgba(255, 255, 255, 0.856);">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>User Name</th>
+                            <th>Email ID</th>
+                            <th>Chat</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for data in alumni_data %}
+                        <tr>
+                            <td>{{ data[1] }}</td>
+                            <td>{{ data[2] }}</td>
+                            <td>
+                                <a href="{{ url_for('alumni_chat', id=data[0]) }}" class="btn btn-success btn-sm">Chat</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <p class="text-center text-light">No alumni are here at the moment!</p>
+        {% endif %}
+    </div>
+
+{% endblock %}

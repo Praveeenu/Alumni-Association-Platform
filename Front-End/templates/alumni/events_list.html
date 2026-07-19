@@ -1,0 +1,147 @@
+{% extends 'index.html' %}
+
+{% block navbar %}
+    <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+            <a class="nav-link" href="{{url_for('alumni_home')}}" style="color: white;">Home</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{url_for('alumni_gallery')}}" style="color: white; padding-left: 30px;">Gallery</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{url_for('alumni_news')}}" style="color: white; padding-left: 30px;">News</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{url_for('alumni_achiever')}}" style="color: white; padding-left: 30px;">Achievers</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{url_for('events_list')}}" style="color: yellow; padding-left: 30px;">Events</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{url_for('alumni_list')}}" style="color: white; padding-left: 30px;">Chatbox</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{url_for('alumni_chatbot')}}" style="color: white; padding-left: 30px;">Chatbot</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{url_for('profile')}}" style="color: white; padding-left: 30px;">Profile</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{url_for('index')}}" style="color: white; padding-left: 30px;">Logout</a>
+        </li>
+    </ul>
+{% endblock %}
+
+{% block content %}
+    <div class="banner_section layout_padding" style="display: flex; align-items: center; justify-content: center; background-color: rgba(0, 0, 0, 0.655); min-height: 100vh;">
+        <div class="container">
+            <div class="row justify-content-center">
+                {% if events_data %}
+                    {% for event in events_data %}
+                    <div class="col-md-6 col-lg-4 mb-4 d-flex justify-content-center">
+                        <div class="p-4" style="background-color: rgba(255, 255, 255, 0.85); border-radius: 10px; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); text-align: center;">
+                            <h3 class="mb-4">Event {{ loop.index }}</h3>
+
+                            <div class="row mb-3">
+                                <div class="col-md-3 text-right">
+                                    <label for="event_name">Event Name</label>
+                                </div>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control" id="event_name" value="{{ event[1] }}" disabled>
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <div class="col-md-3 text-right">
+                                    <label for="description">Description</label>
+                                </div>
+                                <div class="col-md-9">
+                                    <textarea class="form-control" id="description" disabled>{{ event[2] }}</textarea>
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <div class="col-md-3 text-right">
+                                    <label for="event_date">Event Date</label>
+                                </div>
+                                <div class="col-md-9">
+                                    <input type="date" class="form-control" id="event_date" value="{{ event[3] }}" disabled>
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <div class="col-md-3 text-right">
+                                    <label for="event_time">Event Time</label>
+                                </div>
+                                <div class="col-md-9">
+                                    <input type="time" class="form-control" id="event_time" value="{{ event[4] }}" disabled>
+                                </div>
+                            </div>
+
+                            
+                            
+
+                            <div class="row">
+                                <div class="col-12">
+                                    <button type="button" class="btn btn-success btn-block" data-toggle="modal" data-target="#exampleModal{{ loop.index }}">Book</button>
+                                </div>
+                            </div>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="exampleModal{{ loop.index }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel{{ loop.index }}" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <form action="{{ url_for('events_list') }}" method="POST" onsubmit="return validateForm()">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel{{ loop.index }}">Payment for Event {{ event[1] }}</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+
+                                            <div class="modal-body">
+                                                <div class="mb-3">
+                                                    <label for="event_amount">Amount</label>
+                                                    <input type="text" class="form-control" value="{{ event[5] }}" disabled>
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label for="name">Account Holder Name</label>
+                                                    <input type="text" class="form-control" id="name" name="name" required>
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label for="ac_no">Account Number</label>
+                                                    <input type="text" class="form-control" id="ac_no" name="ac_no" minlength="16" maxlength="16" required title="Please provide a valid account number. Number should contain exactly 16 digits">
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label for="cvv">CVV Number</label>
+                                                    <input type="text" class="form-control" id="cvv" name="cvv" minlength="3" maxlength="4" required title="Please provide a valid CVV number. Number should contain 3 or 4 digits">
+                                                </div>
+
+                                                <input type="hidden" name="id" value="{{ event[0] }}">
+                                            </div>
+
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn btn-primary">Pay</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {% if loop.index is divisibleby 3 %}
+                        <div class="w-100"></div>
+                    {% endif %}
+                    {% endfor %}
+                {% else %}
+                    <p class="text-center text-light">No Events at the moment!</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
